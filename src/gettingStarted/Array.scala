@@ -29,5 +29,4 @@ object Array {
     val sorted = isSorted(scala.Array(1, 2, 3), (n1: Int, n2: Int) => n1 >= n2)
     println(sorted)
   }
-
 }

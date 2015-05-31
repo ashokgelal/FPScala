@@ -16,5 +16,4 @@ object Fibonacci {
   def main(args: Array[String]) {
     println(fib(5))
   }
-
 }
