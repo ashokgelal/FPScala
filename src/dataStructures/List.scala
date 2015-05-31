@@ -92,6 +92,10 @@ object List {
   def reverse[A](as: List[A]): List[A] = {
     foldLeft(as, List[A]())((acc, h) => Cons(h, acc))
   }
+
+  def concat[A](l: List[List[A]]): List[A] = {
+    foldRight(l, Nil: List[A])(append)
+  }
 }
 
 object Run {
@@ -116,5 +120,7 @@ object Run {
 
     println(List.reverse(list))
     println(List.appendR(list, List(6, 7, 8)))
+
+    println(List.concat(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9))))
   }
 }
