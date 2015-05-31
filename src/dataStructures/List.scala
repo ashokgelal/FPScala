@@ -71,6 +71,10 @@ object List {
     case Cons(h, t) => Cons(h, append(t, a2))
   }
 
+  def appendR[A](a1: List[A], a2: List[A]): List[A] = {
+    foldRight(a1, a2)(Cons(_, _))
+  }
+
   def init[A](l: List[A]): List[A] = l match {
     case Nil => sys.error("init of empty list")
     case Cons(_, Nil) => Nil
@@ -83,6 +87,10 @@ object List {
 
   def lengthL[A](as: List[A]): Int = {
     foldLeft(as, 0)((x, _) => x + 1)
+  }
+
+  def reverse[A](as: List[A]): List[A] = {
+    foldLeft(as, List[A]())((acc, h) => Cons(h, acc))
   }
 }
 
@@ -105,5 +113,8 @@ object Run {
     println(List.sumL(List(1, 2, 3, 4)))
     println(List.productL(List(1, 2, 3)))
     println(List.lengthL(list))
+
+    println(List.reverse(list))
+    println(List.appendR(list, List(6, 7, 8)))
   }
 }
