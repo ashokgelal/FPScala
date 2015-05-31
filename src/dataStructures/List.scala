@@ -96,6 +96,15 @@ object List {
   def concat[A](l: List[List[A]]): List[A] = {
     foldRight(l, Nil: List[A])(append)
   }
+  def map[A, B](l: List[A])(f: A => B): List[B] = {
+    val buf = new ListBuffer[B]
+    def loop(l: List[A]): Unit = l match {
+      case Nil => ()
+      case Cons(h, t) => buf += f(h); loop(t)
+    }
+    loop(l)
+    List(buf.toList: _*) // convert from the standard Scala list to our list
+  }
 }
 
 object Run {
@@ -122,5 +131,6 @@ object Run {
     println(List.appendR(list, List(6, 7, 8)))
 
     println(List.concat(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9))))
+    println(s"map(): ${List.map(list)(_ + 1)}")
   }
 }
