@@ -1,5 +1,7 @@
 package dataStructures
 
+import scala.annotation.tailrec
+
 sealed trait List[+A]
 
 case object Nil extends List[Nothing]
@@ -13,12 +15,26 @@ object List {
     case Cons(h, t) => f(h, foldRight(t, z)(f))
   }
 
+  @tailrec
+  def foldLeft[A, B](l: List[A], z: B)(f: (B, A) => B): B = l match {
+    case Nil => z
+    case Cons(h, t) => foldLeft(t, f(z, h))(f)
+  }
+
   def sum(ints: List[Int]): Int = {
     foldRight(ints, 0)(_ + _) // equivalent to foldRight(ints, 0)((x, y) => x + y)
   }
 
   def product(ds: List[Double]): Double = {
     foldRight(ds, 1.0)(_ * _) // equivalent to foldRight(ds, 1.0)((x, y) => x * y)
+  }
+
+  def sumL(ints: List[Int]): Int = {
+    foldLeft(ints, 0)(_ + _)
+  }
+
+  def productL(ds: List[Double]): Double = {
+    foldLeft(ds, 1.0)(_ * _)
   }
 
   def apply[A](as: A*): List[A] =
@@ -64,6 +80,10 @@ object List {
   def length[A](as: List[A]): Int = {
     foldRight(as, 0)((_, y) => 1 + y)
   }
+
+  def lengthL[A](as: List[A]): Int = {
+    foldLeft(as, 0)((x, _) => x + 1)
+  }
 }
 
 object Run {
@@ -81,5 +101,9 @@ object Run {
     println(List.product(List(1, 2, 3)))
 
     println(List.length(list))
+
+    println(List.sumL(List(1, 2, 3, 4)))
+    println(List.productL(List(1, 2, 3)))
+    println(List.lengthL(list))
   }
 }
