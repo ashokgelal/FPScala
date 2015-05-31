@@ -60,6 +60,10 @@ object List {
     case Cons(_, Nil) => Nil
     case Cons(h, t) => Cons(h, init(t))
   }
+
+  def length[A](as: List[A]): Int = {
+    foldRight(as, 0)((_, y) => 1 + y)
+  }
 }
 
 object Run {
@@ -75,5 +79,7 @@ object Run {
 
     println(List.sum(List(1, 2, 3, 4)))
     println(List.product(List(1, 2, 3)))
+
+    println(List.length(list))
   }
 }
